@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday My Favourite Person (Samiksha)</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+    background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
+    overflow: hidden;
+}
+
+/* 🌸 FLOWERS */
+.flower {
+    position: fixed;
+    top: -50px;
+    font-size: 24px;
+    opacity: 0.7;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* 🎁 ENTRY */
+.cover {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: glowBg 2s infinite alternate;
+}
+@keyframes glowBg {
+    from { box-shadow: 0 0 20px pink; }
+    to { box-shadow: 0 0 80px deeppink; }
+}
+
+/* BUTTON */
+.btn {
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.yes {
+    background: #00c853;
+    color: white;
+    box-shadow: 0 0 15px #00ff6a;
+}
+.yes:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px #00ff6a;
+}
+.no {
+    background: #ff1744;
+    color: white;
+    position: relative;
+    box-shadow: 0 0 15px red;
+}
+.no:hover {
+    box-shadow: 0 0 30px red;
+}
+
+/* CARD */
+.card {
+    display:none;
+    text-align:center;
+    padding:20px;
+}
+
+h1 {
+    color:white;
+    text-shadow:0 0 20px hotpink;
+}
+
+.name {
+    color:white;
+    font-size:25px;
+}
+
+/* Layout */
+.content {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:30px;
+}
+.side-img {
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    border:4px solid white;
+}
+
+/* TEXT */
+.center-text {
+    width:50%;
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* ✨ TEXT EFFECT */
+.center-text span {
+    opacity:0;
+    display:inline-block;
+    animation:show 0.5s forwards;
+    color:white;
+    text-shadow:
+        0 0 5px white,
+        0 0 10px pink,
+        0 0 20px deeppink,
+        0 0 40px deeppink;
+}
+@keyframes show {
+    to { opacity:1; transform:translateY(0); }
+}
+
+/* 🎈 BALLOON */
+.balloon {
+    position:fixed;
+    bottom:-100px;
+    font-size:30px;
+    animation:float 8s linear infinite;
+}
+@keyframes float {
+    to { transform:translateY(-110vh); }
+}
+
+/* 🎆 CANVAS */
+canvas {
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 MANY FLOWERS -->
+<div class="flower" style="left:5%;animation-duration:6s;">🌸</div>
+<div class="flower" style="left:15%;animation-duration:7s;">🌺</div>
+<div class="flower" style="left:25%;animation-duration:5s;">🌸</div>
+<div class="flower" style="left:35%;animation-duration:6s;">🌺</div>
+<div class="flower" style="left:45%;animation-duration:7s;">🌸</div>
+<div class="flower" style="left:55%;animation-duration:6s;">🌺</div>
+<div class="flower" style="left:65%;animation-duration:5s;">🌸</div>
+<div class="flower" style="left:75%;animation-duration:7s;">🌺</div>
+<div class="flower" style="left:85%;animation-duration:6s;">🌸</div>
+<div class="flower" style="left:95%;animation-duration:5s;">🌺</div>
+
+<!-- ENTRY -->
+<div class="cover">
+    <h2 style="color:white">Ritesh, your best friend?</h2>
+    <button class="btn yes" onclick="openCard()">YES</button>
+    <button class="btn no" onmouseover="moveNo(this)">NO</button>
+</div>
+
+<!-- BALLOON -->
+<div class="balloon" style="left:20%">🎈</div>
+<div class="balloon" style="left:70%">🎈</div>
+
+<!-- CARD -->
+<div class="card">
+    <h1>🎉 Happy Birthday 🎂</h1>
+    <div class="name">💖 Samiksha 💖</div>
+
+    <div class="content">
+        <img src="photo1.jpg" class="side-img">
+
+        <div id="message" class="center-text"></div>
+
+        <img src="photo2.jpg" class="side-img">
+    </div>
+</div>
+
+<canvas id="fire"></canvas>
+
+<script>
+
+/* OPEN */
+function openCard(){
+    document.querySelector(".cover").style.display="none";
+    document.querySelector(".card").style.display="block";
+    typeMessage();
+    firework();
+}
+
+/* NO BUTTON RUN */
+function moveNo(btn){
+    btn.style.position="absolute";
+    btn.style.top=Math.random()*80+"%";
+    btn.style.left=Math.random()*80+"%";
+}
+
+/* MESSAGE */
+let msg=[
+"Wishing you a very Happy Birthday! 🎂",
+"May your day be filled with happiness 💖",
+"You are a very special person 🌟",
+"May all your dreams come true ✨",
+"Stay blessed and keep smiling 😊",
+"You deserve all success 💫",
+"Keep shining like a star 🌠",
+"Enjoy your day 🎉",
+"May happiness follow you 🌸",
+"Lots of love ❤️"
+];
+
+/* TYPE (EMOJI SAFE) */
+function typeMessage(){
+    let box=document.getElementById("message");
+    let delay=0;
+
+    msg.forEach(line=>{
+        let chars=Array.from(line);
+
+        chars.forEach(ch=>{
+            let span=document.createElement("span");
+
+            if(ch===" ") span.innerHTML="&nbsp;";
+            else span.textContent=ch;
+
+            span.style.animationDelay=delay+"ms";
+            box.appendChild(span);
+            delay+=40;
+        });
+
+        box.appendChild(document.createElement("br"));
+        delay+=300;
+    });
+}
+
+/* 💖 HEART FIREWORK */
+function firework(){
+    const canvas=document.getElementById("fire");
+    const ctx=canvas.getContext("2d");
+
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+    let rockets=[],particles=[],running=true;
+
+    function Rocket(){
+        this.x=Math.random()*canvas.width;
+        this.y=canvas.height;
+        this.speed=5;
+        this.exploded=false;
+    }
+
+    function Particle(x,y,angle){
+        this.x=x;
+        this.y=y;
+        this.angle=angle;
+        this.speed=3;
+        this.life=80;
+    }
+
+    function launch(){
+        rockets.push(new Rocket());
+    }
+
+    function animate(){
+        ctx.fillStyle="rgba(0,0,0,0.1)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        rockets.forEach((r,i)=>{
+            if(!r.exploded){
+                r.y-=r.speed;
+
+                ctx.beginPath();
+                ctx.arc(r.x,r.y,3,0,6.28);
+                ctx.fillStyle="white";
+                ctx.fill();
+
+                if(r.y<canvas.height/2){
+                    r.exploded=true;
+
+                    for(let t=0;t<6.28;t+=0.2){
+                        let x=16*Math.pow(Math.sin(t),3);
+                        let y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
+
+                        particles.push(new Particle(r.x+x*4,r.y+y*4,t));
+                    }
+                }
+            } else rockets.splice(i,1);
+        });
+
+        particles.forEach((p,i)=>{
+            p.x+=Math.cos(p.angle)*p.speed;
+            p.y+=Math.sin(p.angle)*p.speed;
+            p.life--;
+
+            ctx.beginPath();
+            ctx.arc(p.x,p.y,2,0,6.28);
+            ctx.fillStyle="hotpink";
+            ctx.shadowBlur=15;
+            ctx.shadowColor="hotpink";
+            ctx.fill();
+
+            if(p.life<=0) particles.splice(i,1);
+        });
+
+        if(running) requestAnimationFrame(animate);
+    }
+
+    let interval=setInterval(launch,1000);
+
+    setTimeout(()=>{
+        running=false;
+        clearInterval(interval);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+    },6000);
+
+    animate();
+}
+
+</script>
+
+</body>
+</html>
